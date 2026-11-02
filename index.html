@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College Survival Hub</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-container">
+
+        <p class="welcome-text">
+            welcome to college survival hub
+        </p>
+
+        <h1>Your student life, organised.</h1>
+
+        <p class="description">
+            One place for your timetable, attendance,
+            assignments, notes and exams.
+        </p>
+
+        <div class="tabs">
+
+            <button id="login-tab" class="tab active" type="button">
+                Login
+            </button>
+
+            <button id="signup-tab" class="tab" type="button">
+                Create Account
+            </button>
+
+        </div>
+
+        <!-- LOGIN FORM -->
+
+        <form id="login-form">
+
+            <label>Email Address</label>
+
+            <input
+                type="email"
+                id="login-email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="login-password"
+                placeholder="Enter your website password"
+                required
+            >
+
+            <button type="submit" class="main-button">
+                Login
+            </button>
+
+        </form>
+
+        <!-- REGISTRATION FORM -->
+
+        <form id="signup-form" class="hidden">
+
+            <label>Your Name</label>
+
+            <input
+                type="text"
+                id="signup-name"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label>Email Address</label>
+
+            <input
+                type="email"
+                id="signup-email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label>Create Password</label>
+
+            <input
+                type="password"
+                id="signup-password"
+                placeholder="Minimum 8 characters"
+                minlength="8"
+                required
+            >
+
+            <button type="submit" class="main-button">
+                Create My Account
+            </button>
+
+        </form>
+
+        <p id="message" class="message"></p>
+
+        <p class="footer-text">
+            made for students, by student.
+
+        </p>
+
+    </div>
+
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

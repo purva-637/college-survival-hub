@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard | College Survival Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- PDF.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<!-- PDF.js Worker -->
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
+
+<!-- Tesseract OCR Library -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+
+<body class="dashboard-page">
+
+    <!-- TOP HEADER -->
+    <header class="dashboard-header">
+        <h2>✦ College Survival Hub</h2>
+        <button id="logout-button" class="logout-btn">Logout ↗</button>
+    </header>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <p class="sidebar-label">YOUR WORKSPACE</p>
+
+            <nav>
+                <a href="#home" class="nav-link active">⌂ &nbsp; Overview</a>
+                <a href="#timetable" class="nav-link">▦ &nbsp; Timetable</a>
+                <a href="#attendance" class="nav-link">◷ &nbsp; Attendance</a>
+                <a href="#assignments" class="nav-link">☑ &nbsp; Assignments</a>
+                <a href="#notes" class="nav-link">▤ &nbsp; Notes & Documents</a>
+                <a href="#exams" class="nav-link">▣ &nbsp; Exam Planner</a>
+                <a href="#study" class="nav-link">✎ &nbsp; Study Planner</a>
+                <a href="#important-links" class="nav-link">🔗 &nbsp; Important Links</a>
+            </nav>
+
+            <div class="sidebar-tip">
+                <span>✦ A little progress</span>
+                <p>Every day is a new chance to learn something.</p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- WELCOME -->
+            <section class="hero" id="home">
+                <div>
+                    <p class="welcome-text">YOUR PERSONAL STUDENT SPACE ✨</p>
+                    <h1 id="student-name">Welcome, Student!</h1>
+                    <p>Plan smarter, stay organised and make college life easier.</p>
+                </div>
+                <div class="hero-decoration">✦</div>
+            </section>
+
+            <!-- OVERVIEW STATISTICS -->
+            <section class="stats-grid">
+
+                <div class="stat-card">
+                    <span class="stat-icon">📚</span>
+                    <p>Total Subjects</p>
+                    <h2 id="stat-subjects">0</h2>
+                    <small>In your attendance tracker</small>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-icon">📝</span>
+                    <p>Pending Assignments</p>
+                    <h2 id="stat-assignments">0</h2>
+                    <small>Still to be completed</small>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-icon">📅</span>
+                    <p>Upcoming Exams</p>
+                    <h2 id="stat-exams">0</h2>
+                    <small>Today and future exams</small>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-icon">🎯</span>
+                    <p>Completed Study Tasks</p>
+                    <h2 id="stat-study">0</h2>
+                    <small>Tasks you've finished</small>
+                </div>
+
+            </section>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Your Student Tools</h2>
+                    <p>Everything you need, all in one place.</p>
+                </div>
+                <span class="section-tag">MY WORKSPACE</span>
+            </div>
+
+            <!-- FEATURES -->
+            <section class="dashboard-grid">
+
+                <!-- TIMETABLE -->
+                <section class="dashboard-card timetable-card" id="timetable">
+                    <h2>📅 My Timetable</h2>
+                    <p>Upload your college timetable in PDF or image format.</p>
+
+                    <label for="timetable-upload" class="upload-label">
+                        Choose Your Timetable
+                    </label>
+
+                    <input type="file" id="timetable-upload"
+                        accept=".pdf,.jpg,.jpeg,.png">
+
+                    <p class="small-text">
+                        PDF, JPG, JPEG or PNG. Maximum size: 5 MB.
+                    </p>
+
+                    <p id="upload-message" class="message"></p>
+                    <div id="timetable-preview"></div>
+                    <!-- AUTOMATIC TIMETABLE EXTRACTION -->
+
+<div id="timetable-extraction" class="timetable-extraction hidden">
+
+    <h3>📖 Extracted Timetable Details</h3>
+
+    <p id="extraction-message">
+        Reading your timetable...
+    </p>
+
+    <div id="extracted-subjects"></div>
+
+    <button id="confirm-subjects" type="button">
+        Add Confirmed Subjects to Attendance
+    </button>
+
+</div>
+
+                    <button id="remove-timetable"
+                        class="feature-btn hidden" type="button">
+                       Change or Remove Timetable
+                    </button>
+                </section>
+
+                <!-- ATTENDANCE -->
+                <section class="dashboard-card attendance-card" id="attendance">
+                    <h2>📊 Attendance Tracker</h2>
+                    <p>Track your attendance subject by subject.</p>
+
+                    <div class="attendance-form">
+                        <input type="text" id="subject-name"
+                            placeholder="Enter subject name">
+                        <button id="add-subject" type="button">
+                            Add Subject
+                        </button>
+                    </div>
+
+                    <p id="attendance-message"></p>
+                    <div id="attendance-list"></div>
+                </section>
+
+                <!-- ASSIGNMENTS -->
+                <section class="dashboard-card assignment-card" id="assignments">
+                    <h2>📝 Assignment Tracker</h2>
+                    <p>Manage your assignments and deadlines.</p>
+
+                    <div class="assignment-form">
+                        <input type="text" id="assignment-name"
+                            placeholder="Assignment name">
+
+                        <input type="text" id="assignment-subject"
+                            placeholder="Subject name">
+
+                        <input type="date" id="assignment-deadline">
+
+                        <button id="add-assignment" type="button">
+                            Add Assignment
+                        </button>
+                    </div>
+
+                    <p id="assignment-message"></p>
+                    <div id="assignment-list"></div>
+                </section>
+
+                <!-- NOTES -->
+                <section class="dashboard-card notes-card" id="notes">
+                    <h2>📚 Notes & Documents</h2>
+                    <p>Write study notes and upload your documents.</p>
+
+                    <input type="text" id="note-title"
+                        placeholder="Enter note title">
+
+                    <textarea id="note-content"
+                        placeholder="Write your study notes here..."
+                        rows="5"></textarea>
+
+                    <button id="save-note" type="button">Save Note</button>
+
+                    <hr>
+
+                    <h3>Upload Documents</h3>
+                    <input type="file" id="document-upload"
+                        accept=".pdf,.jpg,.jpeg,.png">
+
+                    <p id="notes-message"></p>
+                    <div id="notes-list"></div>
+                </section>
+
+                <!-- EXAMS -->
+                <section class="dashboard-card exam-card" id="exams">
+                    <h2>📖 Exam Planner</h2>
+                    <p>Organise your exams and prepare in advance.</p>
+
+                    <div class="exam-form">
+                        <input type="text" id="exam-subject"
+                            placeholder="Enter exam subject">
+
+                        <input type="date" id="exam-date">
+
+                        <button id="add-exam" type="button">
+                            Add Exam
+                        </button>
+                    </div>
+
+                    <p id="exam-message"></p>
+                    <div id="exam-list"></div>
+                </section>
+
+                <!-- STUDY PLANNER -->
+                <section class="dashboard-card study-card" id="study">
+                    <h2>🎯 Study Planner</h2>
+                    <p>Plan your daily study activities and stay organised.</p>
+
+                    <div class="study-form">
+                        <input type="text" id="study-task"
+                            placeholder="Enter your study task">
+
+                        <input type="date" id="study-date">
+
+                        <select id="study-priority">
+                            <option value="Low">Low Priority</option>
+                            <option value="Medium" selected>Medium Priority</option>
+                            <option value="High">High Priority</option>
+                        </select>
+
+                        <button id="add-study-task" type="button">
+                            Add Task
+                        </button>
+                    </div>
+
+                    <p id="study-message"></p>
+                    <div id="study-list"></div>
+                </section>
+
+            </section>
+
+            <footer class="dashboard-footer">
+                Made for students, by a student. 💜
+            </footer>
+
+        </main>
+    </div>
+    
+<!-- ===== IMPORTANT LINKS SECTION ===== -->
+
+<section id="important-links" class="dashboard-section">
+
+    <div class="section-heading">
+        <h2>Important Links 🔗</h2>
+        <p>All your important academic links in one place.</p>
+    </div>
+
+    <!-- Default MIT-WPU Links -->
+    <div class="feature-grid">
+
+        <a href="https://cas.mitwpu.edu.in/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="feature-card link-card">
+            <div class="link-icon">🎓</div>
+            <h3>MIT-WPU ERP Portal</h3>
+            <p>Access your ERP account and academic information.</p>
+            <span class="link-action">Open ERP Portal ↗</span>
+        </a>
+
+        <a href="https://lms.mitwpu.edu.in/login/index.php"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="feature-card link-card">
+            <div class="link-icon">📚</div>
+            <h3>MIT-WPU LMS Portal</h3>
+            <p>Access learning materials and assignments.</p>
+            <span class="link-action">Open LMS Portal ↗</span>
+        </a>
+
+        <a href="https://mitwpu.edu.in/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="feature-card link-card">
+            <div class="link-icon">🏛️</div>
+            <h3>MIT-WPU Official Website</h3>
+            <p>Explore university news and information.</p>
+            <span class="link-action">Visit Website ↗</span>
+        </a>
+
+    </div>
+
+    <!-- Add Your Own Links -->
+    <div class="custom-links-area">
+
+        <h3>✨ Add Your Own Links</h3>
+        <p>Save your favourite educational and useful websites here.</p>
+
+        <div class="custom-link-form">
+
+            <input type="text"
+                   id="custom-link-name"
+                   placeholder="Enter link name (e.g. Google Drive)">
+
+            <input type="url"
+                   id="custom-link-url"
+                   placeholder="Enter website URL (https://...)">
+
+            <button type="button" id="add-custom-link">
+                + Add Link
+            </button>
+
+        </div>
+
+        <p id="custom-link-message" aria-live="polite"></p>
+
+        <div id="custom-links-list" class="custom-links-list"></div>
+
+    </div>
+
+</section>
+
+
+    <script src="js/dashboard.js"></script>
+    
+<!-- ===== CREATOR CREDIT ===== -->
+
+<footer class="creator-footer">
+
+    <h3>🎓 College Survival Hub</h3>
+
+    <p>Made with care for students, by a student.</p>
+
+    <div class="creator-divider"></div>
+
+    <span>Created & Developed by</span>
+
+    <h2>Purva Manesh Desale</h2>
+
+    <p class="creator-degree">
+        B.Tech Computer Science & Engineering
+    </p>
+
+    <small>
+        © 2026 College Survival Hub. All rights reserved.
+    </small>
+
+</footer>
+
+</body>
+</html>
